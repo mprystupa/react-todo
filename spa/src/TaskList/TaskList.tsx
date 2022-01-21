@@ -1,38 +1,31 @@
-import { useState } from 'react';
 import { AddTask } from '../AddTask/AddTask';
 import FlexBox from '../Common/FlexBox';
-import { Task, TaskListEntry } from './TaskListEntry';
+import useTasks from '../hooks/useTasks';
+import { PostTask, TaskListEntry } from './TaskListEntry';
 
 const TaskList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: 1,
-      name: 'test',
-      isComplete: false,
-    },
-    { id: 2, isComplete: false, name: 'test2' },
-  ]);
+  const { tasks, error, loading, addTask, updateTask, deleteTask } = useTasks();
 
-  const addTask = (taskName: string) => {
-    const newTask: Task = {
-      id: tasks.length,
+  const addNewTask = (taskName: string) => {
+    const newTask: PostTask = {
       name: taskName,
       isComplete: false,
     };
 
-    setTasks([...tasks, newTask]);
-  };
-
-  const deleteTask = (taskId: number) => {
-    const tasksAfterDelete = [...tasks];
-    setTasks(tasksAfterDelete.filter((task) => task.id != taskId));
+    addTask(newTask);
   };
 
   return (
     <FlexBox sx={{ flexDirection: 'column', width: '100%', gap: '10px' }}>
-      <AddTask onAddTask={addTask} />
+      <AddTask onAddTask={addNewTask} />
       {tasks.map((task) => (
-        <TaskListEntry task={task} onDeleteTask={deleteTask} />
+        <TaskListEntry
+          key={task.id}
+          task={task}
+          onEditTask={updateTask}
+          onDeleteTask={deleteTask}
+          readOnly={loading}
+        />
       ))}
     </FlexBox>
   );

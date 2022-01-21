@@ -1,8 +1,9 @@
 import './App.css';
-import { AddTask } from './AddTask/AddTask';
+import { Divider } from '@mui/material';
 import FlexBox from './Common/FlexBox';
 import TaskList from './TaskList/TaskList';
 import Logo from './Logo/Logo';
+import SearchTasks from './SearchTasks/SearchTasks';
 
 function App() {
   return (
@@ -15,16 +16,31 @@ function App() {
     >
       <FlexBox
         sx={{
-          width: '50%',
+          width: '60%',
           height: '100%',
+          margin: '0 40px',
           alignItems: 'center',
-          justifyContent: 'center',
           flexDirection: 'column',
           gap: '40px',
         }}
       >
         <Logo />
         <TaskList />
+      </FlexBox>
+
+      <Divider orientation="vertical" />
+
+      <FlexBox
+        sx={{
+          width: '30%',
+          height: '100%',
+          margin: '0 40px',
+          alignItems: 'center',
+          flexDirection: 'column',
+          gap: '40px',
+        }}
+      >
+        <SearchTasks />
       </FlexBox>
     </FlexBox>
   );

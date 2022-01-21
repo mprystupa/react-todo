@@ -60,7 +60,7 @@ app.MapDelete("/todos/{id}", async (int id, ToDoDb db) =>
 app.UseHttpsRedirection();
 app.Run();
 
-public record class ToDoEntry(int Id, string Name, bool IsComplete);
+public record class ToDoEntry(int? Id, string Name, bool IsComplete);
 
 public class ToDoDb : DbContext
 {
