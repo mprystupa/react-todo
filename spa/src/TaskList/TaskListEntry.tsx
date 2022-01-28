@@ -53,7 +53,7 @@ export const TaskListEntry: React.FC<TaskListEntryProps> = ({
             backgroundColor: readOnly ? 'lightgray' : 'white',
             transition: 'background-color 0.5s ease',
           }}
-          onClick={(e) => setEditMode(true)}
+          onClick={(e) => setEditMode(true && !readOnly)}
         >
           <CardContent
             sx={{
