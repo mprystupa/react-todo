@@ -1,48 +1,53 @@
 import './App.css';
 import { Divider } from '@mui/material';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import FlexBox from './Common/FlexBox';
 import TaskList from './TaskList/TaskList';
 import Logo from './Logo/Logo';
 import SearchTasks from './SearchTasks/SearchTasks';
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <FlexBox
-      sx={{
-        justifyContent: 'center',
-        height: '100vh',
-        backgroundColor: 'lightblue',
-      }}
-    >
+    <QueryClientProvider client={queryClient}>
       <FlexBox
         sx={{
-          width: '60%',
-          height: '100%',
-          margin: '0 40px',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '40px',
+          justifyContent: 'center',
+          height: '100vh',
+          backgroundColor: 'lightblue',
         }}
       >
-        <Logo />
-        <TaskList />
-      </FlexBox>
+        <FlexBox
+          sx={{
+            width: '60%',
+            height: '100%',
+            margin: '0 40px',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '40px',
+          }}
+        >
+          <Logo />
+          <TaskList />
+        </FlexBox>
 
-      <Divider orientation="vertical" />
+        <Divider orientation="vertical" />
 
-      <FlexBox
-        sx={{
-          width: '30%',
-          height: '100%',
-          margin: '0 40px',
-          alignItems: 'center',
-          flexDirection: 'column',
-          gap: '40px',
-        }}
-      >
-        <SearchTasks />
+        <FlexBox
+          sx={{
+            width: '30%',
+            height: '100%',
+            margin: '0 40px',
+            alignItems: 'center',
+            flexDirection: 'column',
+            gap: '40px',
+          }}
+        >
+          <SearchTasks />
+        </FlexBox>
       </FlexBox>
-    </FlexBox>
+    </QueryClientProvider>
   );
 }
 

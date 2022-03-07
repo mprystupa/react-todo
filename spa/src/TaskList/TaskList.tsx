@@ -1,10 +1,16 @@
 import { AddTask } from '../AddTask/AddTask';
 import FlexBox from '../Common/FlexBox';
+import useAddTask from '../hooks/useAddTask';
+import useDeleteTask from '../hooks/useDeleteTask';
 import useTasks from '../hooks/useTasks';
+import useUpdateTask from '../hooks/useUpdateTask';
 import { PostTask, TaskListEntry } from './TaskListEntry';
 
 const TaskList: React.FC = () => {
-  const { tasks, error, loading, addTask, updateTask, deleteTask } = useTasks();
+  const tasksQuery = useTasks();
+  const addTaskMutation = useAddTask();
+  const updateTaskMutation = useUpdateTask();
+  const deleteTaskMutation = useDeleteTask();
 
   const addNewTask = (taskName: string) => {
     const newTask: PostTask = {
@@ -12,19 +18,19 @@ const TaskList: React.FC = () => {
       isComplete: false,
     };
 
-    addTask(newTask);
+    addTaskMutation.mutate(newTask);
   };
 
   return (
     <FlexBox sx={{ flexDirection: 'column', width: '100%', gap: '10px' }}>
       <AddTask onAddTask={addNewTask} />
-      {tasks.map((task) => (
+      {tasksQuery.data?.map((task) => (
         <TaskListEntry
           key={task.id}
           task={task}
-          onEditTask={updateTask}
-          onDeleteTask={deleteTask}
-          readOnly={loading}
+          onEditTask={updateTaskMutation.mutate}
+          onDeleteTask={deleteTaskMutation.mutate}
+          readOnly={tasksQuery.isLoading}
         />
       ))}
     </FlexBox>

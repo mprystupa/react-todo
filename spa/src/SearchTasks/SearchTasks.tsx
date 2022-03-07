@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import FlexBox from '../Common/FlexBox';
 import useTasks from '../hooks/useTasks';
 import { Task, TaskListEntry } from '../TaskList/TaskListEntry';
-import TaskList from '../TaskList/TaskList';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -50,20 +49,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchTasks: React.FC = () => {
-  const { tasks } = useTasks();
+  const { data } = useTasks();
 
   const [searchText, setSearchText] = useState<string>('');
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
 
   useEffect(() => {
     setFilteredTasks(
-      tasks.filter((task) => task.name.includes(searchText.trim()))
+      data?.filter((task) => task.name.includes(searchText.trim())) ?? []
     );
-  }, [searchText, tasks]);
+  }, [searchText, data]);
 
   return (
     <FlexBox sx={{ flexDirection: 'column', width: '100%', gap: '40px' }}>
-      ToDos: {tasks.length}
+      ToDos: {data?.length}
       <FlexBox>
         <Search>
           <SearchIconWrapper>
